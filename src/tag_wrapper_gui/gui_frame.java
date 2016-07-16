@@ -223,9 +223,9 @@ public class gui_frame extends JFrame{
 	
 	public void show_result(int width,int height, String content, String wrapped_content){
 		this.content_area.setText(content);
-		this.content_area.setCaretPosition(0);
+		this.content_area.setCaretPosition(content_area.getDocument().getLength());//after changing the content, roll to bottoom
 		this.result_area.setText(wrapped_content);
-		this.result_area.setCaretPosition(0);
+		this.result_area.setCaretPosition(result_area.getDocument().getLength());
 		this.result_panel.setVisible(true);
 		this.frame.setLayout(new FlowLayout(FlowLayout.LEFT));
 		this.frame.resize(width, height);

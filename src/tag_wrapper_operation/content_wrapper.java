@@ -7,12 +7,8 @@
 package tag_wrapper_operation;
 
 import java.io.FileReader;
-import java.io.ObjectOutputStream.PutField;
 import java.util.HashMap;
-import java.util.Iterator;
-
 import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
 
 public class content_wrapper {
 	
@@ -113,11 +109,16 @@ public class content_wrapper {
 	 * @return
 	 * 		Configuration in hash format
 	 */
-	public HashMap load_config(){
+	public HashMap load_config() {
 		// Put config in Hashmap
 		HashMap<String, String> config = new HashMap<String, String>();
 		try {
-			FileReader config_file = new FileReader("src/config.json");
+			/**
+			 * when compile, path is src/config.json
+			 * when package, path is config.json
+			 */
+			
+			FileReader config_file = new FileReader("config.json");
 			JsonParser parser = new JsonParser();
 			JsonObject json_object = (JsonObject) parser.parse(config_file);
 			// Gui

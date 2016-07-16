@@ -1,0 +1,15 @@
+{
+	"gui": {
+		"framework_size_init_width": 400,
+		"framework_size_init_height": 650,
+
+		"framework_resized_width": 820,
+		"framework_resized_height": 600,
+
+		"result_editable": false
+	},
+	
+	"calculation": {
+		"title_length": 10
+	}
+}
