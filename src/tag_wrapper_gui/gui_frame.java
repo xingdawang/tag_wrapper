@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 
 import tag_wrapper_operation.*;
 
@@ -43,13 +44,20 @@ public class gui_frame extends JFrame{
 	private JScrollPane scroll_content_pane = new JScrollPane(content_area);
 	private JScrollPane scroll_result_pane = new JScrollPane(result_area);
 	private JFrame frame = new JFrame("HTML tag wrapper");
+	
+	// Frame
+	private HashMap config;
 
 	public gui_frame(){
 		
+		//Load config
+		content_wrapper frame = new content_wrapper();
+		this.config = frame.load_config();
+				
 		// Break words
 		this.content_area.setLineWrap(true);
 		this.result_area.setLineWrap(true);
-		this.result_area.setEditable(false);
+		this.result_area.setEditable(Boolean.parseBoolean((this.config.get("gui_result_editable").toString())));
 		
 		// Panel Layout
 		this.content_panel.setBorder(new TitledBorder(new EtchedBorder(), "You can paste content here:"));
@@ -82,7 +90,10 @@ public class gui_frame extends JFrame{
 				update_content();
 			}
 			public void update_content() {
-				content = content_area.getText();
+//				if(result_area.getText().length() != 0)
+//					content = result_area.getText();
+//				else
+					content = content_area.getText();
 				
 			}
 		});
@@ -93,8 +104,9 @@ public class gui_frame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				content_wrapper wrapper = new content_wrapper();
-				result = wrapper.wrap(content);
-				gui_frame.this.show_result(820, 600, content, result);// Should be configurable
+				result = wrapper.wrap(content, Integer.parseInt(gui_frame.this.config.get("calculation_title_length").toString()));
+				gui_frame.this.show_result(Integer.parseInt(gui_frame.this.config.get("gui_framework_resized_width").toString()),
+						Integer.parseInt(gui_frame.this.config.get("gui_framework_resized_height").toString()), content, result);
 			}
 		});
 		// Mouse event
@@ -138,8 +150,9 @@ public class gui_frame extends JFrame{
 				// TODO Auto-generated method stub
 				if(selected_text != null) {
 					content_wrapper wrapper = new content_wrapper();
-					String updated_result = wrapper.update_content(result, selected_text, "h1");
-					gui_frame.this.show_result(820, 600, content, updated_result);// Should be configurable
+					result = wrapper.update_content(result, selected_text, "h1");
+					gui_frame.this.show_result(Integer.parseInt(gui_frame.this.config.get("gui_framework_resized_width").toString()),
+							Integer.parseInt(gui_frame.this.config.get("gui_framework_resized_height").toString()), content, result);
 				}
 			}
 		});
@@ -151,8 +164,9 @@ public class gui_frame extends JFrame{
 				// TODO Auto-generated method stub
 				if(selected_text != null) {
 					content_wrapper wrapper = new content_wrapper();
-					String updated_result = wrapper.update_content(result, selected_text, "h2");
-					gui_frame.this.show_result(820, 600, content, updated_result);// Should be configurable
+					result = wrapper.update_content(result, selected_text, "h2");
+					gui_frame.this.show_result(Integer.parseInt(gui_frame.this.config.get("gui_framework_resized_width").toString()),
+							Integer.parseInt(gui_frame.this.config.get("gui_framework_resized_height").toString()), content, result);
 				}
 			}
 		});
@@ -164,8 +178,9 @@ public class gui_frame extends JFrame{
 				// TODO Auto-generated method stub
 				if(selected_text != null) {
 					content_wrapper wrapper = new content_wrapper();
-					String updated_result = wrapper.update_content(result, selected_text, "h3");
-					gui_frame.this.show_result(820, 600, content, updated_result);// Should be configurable
+					result = wrapper.update_content(result, selected_text, "h3");
+					gui_frame.this.show_result(Integer.parseInt(gui_frame.this.config.get("gui_framework_resized_width").toString()),
+							Integer.parseInt(gui_frame.this.config.get("gui_framework_resized_height").toString()), content, result);
 				}
 			}
 		});
@@ -177,8 +192,9 @@ public class gui_frame extends JFrame{
 				// TODO Auto-generated method stub
 				if(selected_text != null) {
 					content_wrapper wrapper = new content_wrapper();
-					String updated_result = wrapper.update_content(result, selected_text, "p");
-					gui_frame.this.show_result(820, 600, content, updated_result);// Should be configurable
+					result = wrapper.update_content(result, selected_text, "p");
+					gui_frame.this.show_result(Integer.parseInt(gui_frame.this.config.get("gui_framework_resized_width").toString()), 
+							Integer.parseInt(gui_frame.this.config.get("gui_framework_resized_height").toString()), content, result);
 				}
 			}
 		});
@@ -190,7 +206,7 @@ public class gui_frame extends JFrame{
 		this.operater_panel.add(this.h2_tag_button);
 		this.operater_panel.add(this.h3_tag_button);
 		this.operater_panel.add(this.p_tag_button);
-
+		
 		this.frame.add(content_panel);
 		this.frame.add(result_panel);
 		this.frame.add(operater_panel);
@@ -203,7 +219,8 @@ public class gui_frame extends JFrame{
 		// Do not show result area when open
 		this.result_panel.setVisible(false);
 		this.frame.setLayout(new BoxLayout(this.frame.getContentPane(), BoxLayout.Y_AXIS));
-		this.frame.setSize(400, 600);
+		this.frame.setSize(Integer.parseInt(this.config.get("gui_framework_size_init_width").toString()),
+				Integer.parseInt(this.config.get("gui_framework_size_init_height").toString()));
 		this.frame.setVisible(true);
 	}
 	
