@@ -81,7 +81,8 @@ public class content_wrapper {
 		if(changed_content != null){
 			for (String original_line: original_content.split(System.lineSeparator())){
 				for (String changed_line: changed_content.split(System.lineSeparator())){
-					if(changed_line.length() > 0 && original_line.contains(changed_line)) {
+					String trimed_original_line = original_line.replaceAll("<[^>]*>", "");
+					if(changed_line.length() > 0 && trimed_original_line.equals(changed_line)) {
 						original_line = update_line(original_line, target);
 						break;
 					}

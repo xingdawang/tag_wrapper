@@ -90,10 +90,7 @@ public class gui_frame extends JFrame{
 				update_content();
 			}
 			public void update_content() {
-//				if(result_area.getText().length() != 0)
-//					content = result_area.getText();
-//				else
-					content = content_area.getText();
+				content = content_area.getText();
 				
 			}
 		});
